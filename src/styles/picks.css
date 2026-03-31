@@ -1,0 +1,130 @@
+/* ===== Picks View ===== */
+.picks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
+}
+
+.picks-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.picks-selector__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+}
+
+.picks-selector__select {
+  font: inherit;
+  font-size: 0.875rem;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-white);
+  color: var(--color-text);
+}
+
+/* ===== Score Summary Card ===== */
+.score-summary {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
+}
+
+.score-summary__card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-md);
+  min-width: 120px;
+  text-align: center;
+}
+
+.score-summary__value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-primary);
+}
+
+.score-summary__label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-light);
+  margin-top: var(--space-xs);
+}
+
+.score-summary__card--total .score-summary__value {
+  font-size: 2rem;
+  color: var(--color-accent);
+}
+
+/* ===== Picks Regionals ===== */
+.picks-regionals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.picks-regional {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-md);
+}
+
+.picks-regional__header {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.picks-round {
+  margin-bottom: var(--space-sm);
+}
+
+.picks-round__label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xs);
+}
+
+.picks-round__teams {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+@media (max-width: 640px) {
+  .picks-regionals {
+    grid-template-columns: 1fr;
+  }
+
+  .picks-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .score-summary {
+    gap: var(--space-sm);
+  }
+
+  .score-summary__card {
+    min-width: 80px;
+    padding: var(--space-sm);
+  }
+}

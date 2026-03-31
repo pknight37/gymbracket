@@ -1,0 +1,234 @@
+/* ===== Bracket Grid (Desktop) ===== */
+.bracket-grid {
+  display: flex;
+  gap: var(--space-md);
+  min-height: 500px;
+  padding: var(--space-md) 0;
+}
+
+.bracket-grid__side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.bracket-grid__center {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+/* ===== Regional Card ===== */
+.bracket-regional {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-md);
+  flex: 1;
+}
+
+.bracket-regional__header {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.bracket-regional__rounds {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* ===== Round Column ===== */
+.bracket-round {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.bracket-round__label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-light);
+  text-align: center;
+  margin-bottom: var(--space-xs);
+  white-space: nowrap;
+}
+
+/* ===== Team Pill ===== */
+.team-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  min-height: 26px;
+  transition: border-color 0.15s;
+}
+
+.team-pill__seed {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-alt);
+  border-radius: 3px;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+}
+
+.team-pill__name {
+  flex: 1;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.team-pill__score {
+  flex-shrink: 0;
+  font-size: 0.625rem;
+  color: var(--color-text-light);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Status modifiers */
+.team-pill--advanced {
+  border-left: 3px solid var(--color-success);
+  background: #f0f9f0;
+}
+
+.team-pill--eliminated {
+  opacity: 0.4;
+  background: var(--color-bg);
+}
+
+.team-pill--pending {
+  border-left: 3px solid var(--color-border);
+}
+
+/* Pick correctness modifiers */
+.team-pill--correct {
+  border-left: 3px solid var(--color-success);
+  background: #f0f9f0;
+}
+
+.team-pill--incorrect {
+  border-left: 3px solid var(--color-error);
+  background: #fef0f0;
+}
+
+/* Host indicator */
+.team-pill__host {
+  font-size: 0.5rem;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* ===== Semifinal ===== */
+.bracket-semi {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.bracket-semi__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+  text-align: center;
+}
+
+.bracket-semi__teams {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.bracket-semi__pending {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-pending);
+  padding: var(--space-sm);
+}
+
+/* ===== Championship Center ===== */
+.bracket-championship {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  text-align: center;
+  background: var(--color-white);
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+}
+
+.bracket-championship__title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+}
+
+.bracket-championship__venue {
+  font-size: 0.6875rem;
+  color: var(--color-text-light);
+  line-height: 1.4;
+}
+
+.bracket-championship__winner {
+  margin-top: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.bracket-championship .bracket-semi__teams {
+  width: 100%;
+}
+
+/* ===== Responsive: Stacked Layout ===== */
+@media (max-width: 900px) {
+  .bracket-grid {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .bracket-grid__side {
+    flex: none;
+  }
+
+  .bracket-grid__center {
+    flex: none;
+    order: -1;
+  }
+
+  .bracket-regional__rounds {
+    flex-direction: column;
+  }
+}

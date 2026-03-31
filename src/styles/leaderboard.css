@@ -1,0 +1,72 @@
+/* ===== Leaderboard ===== */
+.leaderboard {
+  max-width: 800px;
+}
+
+.leaderboard__table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.leaderboard__table th,
+.leaderboard__table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.leaderboard__table th {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-light);
+  background: var(--color-bg);
+}
+
+.leaderboard__table td {
+  font-size: 0.875rem;
+}
+
+.leaderboard__rank {
+  width: 40px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-text-light);
+}
+
+.leaderboard__name a {
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: color 0.15s;
+}
+
+.leaderboard__name a:hover {
+  color: var(--color-accent);
+}
+
+.leaderboard__score {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard__possible {
+  color: var(--color-text-light);
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard__row--leader {
+  background: #fffbe6;
+}
+
+@media (max-width: 640px) {
+  .leaderboard__table th,
+  .leaderboard__table td {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.8125rem;
+  }
+}

@@ -1,0 +1,179 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+GymBracket is a static website that tracks results of the NCAA college gymnastics tournament. There is no build step, framework, or package manager — just plain HTML, CSS, and JavaScript served directly from the repo root.
+
+## Development
+
+Open `index.html` directly in a browser, or use any static file server. For example:
+
+```bash
+# Python (no install needed)
+python3 -m http.server 8080
+
+# Node (if npx is available)
+npx serve .
+```
+
+## Conventions
+
+- All pages are plain `.html` files in the repo root or subdirectories.
+- CSS lives in a `styles/` directory; JavaScript in a `scripts/` directory (create these as needed).
+- No minification, bundling, or compilation is expected.
+
+### Architecture Pattern (Data-Driven Pages)
+
+Pages follow a consistent pattern:
+1. `*-data.js` — exports a hardcoded array of entries (no API calls).
+2. `*-renderer.js` — IIFE module that renders HTML from data using `escapeHtml()` for XSS safety.
+3. `*-renderer.test.js` — unit tests for the renderer, run via `tests.html`.
+4. `*-init.js` — tiny bootstrap script loaded by the HTML page, wires data to renderer.
+5. `*.html` — the page itself, loads the CSS and scripts.
+6. `styles/*.css` — page-specific styles (all pages also use `styles/main.css`).
+
+## Test-Driven Development (Canon TDD)
+
+All code in this repo follows Kent Beck's Canon TDD workflow. Source: https://tidyfirst.substack.com/p/canon-tdd
+
+### The Five Steps
+
+1. **Write a test list** — Before touching code, list all expected behavioral variants for the change: cases where the new behavior should work, plus potential impacts on existing behavior.
+2. **Write one test** — Convert exactly one item from the list into a concrete, automated test (setup, invocation, assertions). Make interface design decisions here; minimize implementation decisions.
+3. **Make it pass** — Change the code so the new test and all previous tests pass. Fix the code genuinely — do not delete assertions or hard-code expected values.
+4. **Refactor (optional)** — Now make implementation design decisions. Never mix refactoring with making a test pass; keep these phases separate.
+5. **Repeat** — Return to step 2 until the test list is empty.
+
+### Key Rules
+
+- Write tests one at a time; do not speculatively write all tests upfront. Order matters and shapes the final design.
+- Never refactor while a test is failing.
+- Duplication in code is a hint, not an automatic trigger — don't abstract prematurely.
+
+## UI/UX Design Principles
+
+All UI work in this repo follows these principles. Optimize for intuitive use over clever design.
+
+### Core Philosophy
+
+- Clarity over cleverness, speed over ornamentation, consistency over novelty, usability over density.
+- Primary objective: help users accomplish their goal with minimal cognitive load.
+
+### Visual Hierarchy & Layout
+
+- One clear primary action per screen/view; secondary actions visually de-emphasized.
+- Use size, color, and spacing to indicate importance. Group related items.
+- 8px base spacing system. Spacing scale: 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64.
+- Line length ~60–80 characters for readability.
+- Use whitespace generously; chunk information.
+
+### Typography
+
+- Limit to 1–2 font families. Avoid excessive font weights.
+- Clear heading hierarchy: H1 (page title) → H2 (section) → H3 (subsection) → body → caption.
+
+### Color
+
+- 1 primary color, 1–2 accent colors, neutral grayscale for most UI.
+- Semantic colors: green = success, yellow = warning, red = error, blue = primary action.
+- Meet WCAG AA contrast minimums.
+
+### Components & Interactions
+
+- Navigation: persistent location awareness, clear current state.
+- Buttons: 1 primary per view, destructive actions require confirmation.
+- Forms: labels always visible (not just placeholders), inline validation, sensible defaults.
+- Modals: use sparingly, must be dismissible, never block critical workflows.
+
+### States & Feedback
+
+- Every action produces visible feedback.
+- Design for all states: loading, empty, success, error.
+- Empty states should explain what to do next and include a primary action.
+
+### Accessibility
+
+- Sufficient color contrast (WCAG AA).
+- Keyboard navigable.
+- Clear labels on all inputs.
+- Touch targets ≥ 44px.
+
+### Cognitive UX Laws
+
+- **Hick's Law**: reduce choices presented at once.
+- **Fitts's Law**: make primary actions large and easy to click/tap.
+- **Jakob's Law**: follow common UI patterns users already know.
+- **Von Restorff Effect**: important elements should visually stand out.
+
+### Design Quality Checklist
+
+Before finalizing any UI, verify:
+- Is the primary user goal obvious?
+- Is the primary action obvious?
+- Is anything unnecessary on the screen?
+- Can a first-time user succeed without instructions?
+- Are errors prevented where possible?
+- Is the interface accessible?
+
+## Performance (PageSpeed Insights)
+
+All pages should be designed and built with Google PageSpeed Insights scores in mind. Aim for high scores across all four categories: Performance, Accessibility, Best Practices, and SEO.
+
+### Design & Development Guidelines
+
+- Minimize render-blocking resources (inline critical CSS, defer non-critical JS).
+- Optimize images: use appropriate formats, compress, and include explicit `width`/`height` attributes to prevent layout shift.
+- Keep the DOM simple and shallow.
+- Avoid large layout shifts (CLS) — reserve space for dynamic content, images, and fonts.
+- Prioritize Largest Contentful Paint (LCP) — ensure the main content loads fast.
+- Minimize First Input Delay (FID) / Interaction to Next Paint (INP) — keep JavaScript execution lean.
+
+### Image Best Practices
+
+- Use WebP format for photographs. Convert with `cwebp -q 80 input.png -o output.webp`.
+- Size images at 2x their CSS display dimensions for retina screens (e.g., 360x360 for a 180px element).
+- Always include `width` and `height` attributes on `<img>` tags to prevent layout shift.
+- Add `fetchpriority="high"` to the LCP image (typically the hero/above-the-fold image).
+- Keep image file sizes under 50 KiB where possible.
+
+### Accessibility Checklist
+
+- All text must meet WCAG AA contrast minimums (4.5:1 for normal text, 3:1 for large text).
+- Verify contrast when using accent colors on dark backgrounds.
+- All images must have descriptive `alt` text.
+
+## Security
+
+### No Exposed APIs or Secrets
+
+- **Never commit API keys, tokens, passwords, or credentials** to this repo.
+- The site makes **zero client-side API calls** — no `fetch()`, `XMLHttpRequest`, or AJAX. All data is hardcoded in JS data files (`*-data.js`). Keep it this way.
+
+### No Third-Party Scripts or Cookies
+
+- The site loads **no external JavaScript** — no CDNs, analytics, tracking, or third-party dependencies.
+- The site sets **no cookies**.
+- Before adding any third-party script or service, evaluate the security implications.
+
+### XSS Prevention
+
+- All dynamic HTML rendering uses `escapeHtml()` before inserting data via `innerHTML`.
+- **Never** use `eval()`, `document.write()`, or `new Function()` with dynamic input.
+- **Never** insert user-controlled or external data into `innerHTML` without escaping.
+- Keep all rendering logic in the `*-renderer.js` IIFE modules where escaping is centralized and tested.
+
+### HTTPS / TLS
+
+- All external links in data files should use `https://` URLs, never `http://`.
+
+### Security Checklist for Code Changes
+
+Before merging any change, verify:
+- No API keys, tokens, or credentials added to any file.
+- No new third-party scripts introduced without justification.
+- All dynamic HTML content is escaped via `escapeHtml()`.
+- No `eval()`, `document.write()`, or `new Function()` usage.
+- All external URLs use `https://`.
+- `.gitignore` excludes sensitive files (`.env`, credentials, editor configs).
